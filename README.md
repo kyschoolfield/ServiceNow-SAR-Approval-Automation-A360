@@ -9,6 +9,7 @@ Upon successful approval by the bot, ServiceNow triggers downstream provisioning
 Because standard web recorders struggled with ServiceNow’s dynamic UI elements, I designed a front-end workaround using simulated keystrokes to navigate the pages. To keep the process traceable, the bot logs each transaction to an Excel spreadsheet and archives processed emails to prevent duplicate runs.
 ________________________________________
 Key Technical Achievements
+
 • Targeted Data Extraction: Built string-parsing logic to scrape unique identifiers (sys_id), user names, profiles, and assignment links from incoming emails.
 
 • UI Automation Workaround: Solved object-cloning failures on dynamic ServiceNow pages by scripting a keystroke-driven navigation flow to consistently click the approval buttons.
