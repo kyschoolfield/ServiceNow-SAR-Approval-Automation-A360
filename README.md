@@ -1,4 +1,4 @@
-Automated ServiceNow SAR Approvals (A360)
+[Automated ServiceNow SAR Approvals (A360)
 
 Project Summary
 
@@ -7,43 +7,37 @@ Developed an Automation Anywhere A360 task bot to automate manual Service Access
 Upon successful approval by the bot, ServiceNow triggers downstream provisioning of the user into the relevant Active Directory (AD) groups.
 
 Because standard web recorders struggled with ServiceNow’s dynamic UI elements, I designed a front-end workaround using simulated keystrokes to navigate the pages. To keep the process traceable, the bot logs each transaction to an Excel spreadsheet and archives processed emails to prevent duplicate runs.
-________________________________________
-Key Technical Achievements
+___________# ServiceNow SAR Approval Automation (A360)
 
-• Targeted Data Extraction: Built string-parsing logic to scrape unique identifiers (sys_id), user names, profiles, and assignment links from incoming emails.
+## Business Overview
+An enterprise-style Automation Anywhere (A360) solution designed to automate the end-to-end processing of ServiceNow System Access Requests (SARs). The bot monitors incoming approval emails, extracts request data, applies business logic, updates ServiceNow, logs transaction details for auditing, and handles exceptions seamlessly.
 
-• UI Automation Workaround: Solved object-cloning failures on dynamic ServiceNow pages by scripting a keystroke-driven navigation flow to consistently click the approval buttons.
+---
 
-• Audit Logging & Queue Cleanup: Programmed the bot to update a local Excel audit sheet with timestamps and transaction details, then archive processed emails in Outlook.
+## Video Demonstration
+* 🎬 [Watch the full automation execution on Google Drive](https://drive.google.com/file/d/1brWtXZy1UXLRTwsMK_kboNeUVVfYZun2/view?usp=sharing)
 
-• Error Handling: Implemented structured Try/Catch blocks with browser-refresh commands and deliberate delays to prevent the bot from breaking during slow network loads or page timeouts.
-________________________________________
-Results & Impact
+---
 
-• Zero Manual Steps: Handed the repetitive task of reading, opening, and clicking “Approve” on SAR tickets completely over to the bot, which automatically kicks off downstream AD group provisioning.
+## Key Automation Steps & Logic
+1. **Email Monitoring & Data Extraction:** Monitors Outlook for SAR approval emails and parses key parameters (User ID, System Access Level, Approver Details).
+2. **Business Rule Validation:** Validates extracted parameters against pre-defined business rules prior to system entry.
+3. **ServiceNow Processing:** Navigates ServiceNow and updates/approves the corresponding access request ticket.
+4. **Audit Trail & Reporting:** Records transaction timestamps, status codes, and request details into a centralized Excel audit log.
+5. **Exception Handling:** Captures malformed requests or network timeouts, logging exceptions for manual review.
 
-• Faster Turnaround: Reduced the approval queue processing time from minutes per ticket to seconds.
+---
 
-• Reliable Tracking: Created an automated local Excel audit trail that updates in real time with every successful approval.
-________________________________________
-Future Considerations & Roadmap
+## Bot Script Breakdown
 
-1.	Automating Offboarding & Deprovisioning (“Remove Access” Requests)
-   
-• The Goal: Update the email parsing loop to handle dynamic employee lifecycle events by detecting the “Remove Access” action.
+| Lines 1 - 17 | Lines 17 - 35 | Lines 35 to End |
+| :---: | :---: | :---: |
+| ![Lines 1-17](media/AutomatedSARApproval_Bot_Screenshot1.png) | ![Lines 17-35](media/AutomatedSARApproval_Bot_Screenshot2.png) | ![Lines 35-End](media/AutomatedSARApproval_Bot_Screenshot3.png) |
 
-• The Execution: Add an If/Else condition inside the loop. If $sAction$ is parsed as “Remove Access,” the bot will run an alternative keystroke sequence to change the ServiceNow state dropdown to “No Longer Required,” automating the deprovisioning process.
+---
 
-2.	Safeguarding Admin Accounts (CMS Security Exception Routing)
-   
-• The Goal: Ensure highly sensitive, administrative-level access requests for Content Management System (CMS) applications are never handled automatically by the bot.
-
-• The Execution: Introduce a verification check right after string parsing. If the $sSARProfile$ contains “Admin” or matches privileged credentials, the bot will skip automatic processing, flag the ticket as an exception, and send a direct email follow-up to the CMS SAR Handler for manual vetting.
-
-3.	Resilient Error Recovery (System Exceptions)
-   
-• The Goal: Prevent the automation from silently failing during network lag or loading errors on the ServiceNow UI.
-
-• The Execution: Expand the global Catch block. If the bot fails to complete an approval due to a browser timeout, it will capture the exact error message and automatically email the original SAR Approver to step in and handle it manually.
-
+## Tech Stack & Tools
+* **RPA Platform:** Automation Anywhere A360
+* **Applications:** ServiceNow, Microsoft Outlook, Microsoft Excel
+* **Design & Documentation:** Lucidchart, Process Definition Document (PDD)
 
