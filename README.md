@@ -34,5 +34,4 @@ Because standard web recorders struggled with ServiceNow’s dynamic UI elements
 ## Tech Stack & Tools
 * **RPA Platform:** Automation Anywhere A360
 * **Applications:** ServiceNow, Microsoft Outlook, Microsoft Excel
-* **Design & Documentation:** Lucidchart (As-Is Diagrams), Process Definition Document (PDD)
 
