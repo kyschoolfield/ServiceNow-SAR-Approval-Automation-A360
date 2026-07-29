@@ -1,16 +1,11 @@
-[Automated ServiceNow SAR Approvals (A360)
+# Automated ServiceNow SAR Approvals (A360)
 
-Project Summary
-
-Developed an Automation Anywhere A360 task bot to automate manual Service Access Request (SAR) approvals in ServiceNow. The bot monitors a shared Outlook inbox for unread requests, extracts key details from the email body, and automatically completes the approval step.
+## Project Summary
+Developed an Automation Anywhere A360 task bot to automate manual Service Access Request (SAR) approvals in ServiceNow. The bot monitors a shared Outlook inbox for unread requests, extracts key details from the email body, and automatically completes the approval step. 
 
 Upon successful approval by the bot, ServiceNow triggers downstream provisioning of the user into the relevant Active Directory (AD) groups.
 
 Because standard web recorders struggled with ServiceNow’s dynamic UI elements, I designed a front-end workaround using simulated keystrokes to navigate the pages. To keep the process traceable, the bot logs each transaction to an Excel spreadsheet and archives processed emails to prevent duplicate runs.
-___________# ServiceNow SAR Approval Automation (A360)
-
-## Business Overview
-An enterprise-style Automation Anywhere (A360) solution designed to automate the end-to-end processing of ServiceNow System Access Requests (SARs). The bot monitors incoming approval emails, extracts request data, applies business logic, updates ServiceNow, logs transaction details for auditing, and handles exceptions seamlessly.
 
 ---
 
