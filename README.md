@@ -1,16 +1,16 @@
 # Automated ServiceNow SAR Approvals (A360)
 
 ## Project Summary
-Developed an Automation Anywhere A360 task bot to automate manual Service Access Request (SAR) approvals in ServiceNow. The bot monitors a shared Outlook inbox for unread requests, extracts key details from the email body, and automatically completes the approval step. 
+Developed an enterprise-grade Automation Anywhere A360 task bot to automate manual Service Access Request (SAR) approvals in ServiceNow. This solution has successfully undergone technical code reviews and is slated for production deployment. 
 
-Upon successful approval by the bot, ServiceNow triggers downstream provisioning of the user into the relevant Active Directory (AD) groups.
+The bot monitors a shared Outlook inbox for unread requests, extracts key details from the email body, and automatically completes the approval step. Upon successful approval, ServiceNow triggers downstream provisioning of the user into the relevant Active Directory (AD) groups.
 
-Because standard web recorders struggled with ServiceNow’s dynamic UI elements, I designed a front-end workaround using simulated keystrokes to navigate the pages. To keep the process traceable, the bot logs each transaction to an Excel spreadsheet and archives processed emails to prevent duplicate runs.
+Because standard web recorders struggled with ServiceNow’s dynamic UI elements, I designed a reliable front-end workaround using simulated keystrokes to navigate the pages. To ensure complete audit traceability in a production environment, the bot logs each transaction to an Excel spreadsheet and archives processed emails to prevent duplicate runs.
 
 ---
 
 ## Video Demonstration
-* 🎬 [Watch the full automation execution on Google Drive](https://drive.google.com/file/d/1brWtXZy1UXLRTwsMK_kboNeUVVfYZun2/view?usp=sharing)
+* [Watch the full automation execution on Google Drive](YOUR_GOOGLE_DRIVE_LINK_HERE)
 
 ---
 
@@ -34,5 +34,5 @@ Because standard web recorders struggled with ServiceNow’s dynamic UI elements
 ## Tech Stack & Tools
 * **RPA Platform:** Automation Anywhere A360
 * **Applications:** ServiceNow, Microsoft Outlook, Microsoft Excel
-* **Design & Documentation:** Lucidchart, Process Definition Document (PDD)
+* **Design & Documentation:** Lucidchart (As-Is Diagrams), Process Definition Document (PDD)
 
