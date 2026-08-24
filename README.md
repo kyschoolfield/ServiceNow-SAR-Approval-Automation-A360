@@ -1,37 +1,46 @@
-# Automated ServiceNow SAR Approvals (A360)
+# Automated ServiceNow SAR Approvals (ASAP v1.0)
 
-## Project Summary
-Developed an enterprise-grade Automation Anywhere A360 task bot to automate manual Service Access Request (SAR) approvals in ServiceNow. This solution has successfully undergone technical code reviews and is slated for production deployment. 
+![Automation Anywhere](https://img.shields.io/badge/Platform-Automation_Anywhere_A360-orange?style=flat-square)
+![ServiceNow](https://img.shields.io/badge/Integration-ServiceNow_Inbound_Email-green?style=flat-square)
+![Outlook](https://img.shields.io/badge/Mail-Microsoft_Outlook-blue?style=flat-square)
+![Status](https://img.shields.io/badge/Status-Production_Ready-success?style=flat-square)
 
-The bot monitors a shared Outlook inbox for unread requests, extracts key details from the email body, and automatically completes the approval step. Upon successful approval, ServiceNow triggers downstream provisioning of the user into the relevant Active Directory (AD) groups.
-
-Because standard web recorders struggled with ServiceNow’s dynamic UI elements, I designed a reliable front-end workaround using simulated keystrokes to navigate the pages. To ensure complete audit traceability in a production environment, the bot logs each transaction to an Excel spreadsheet and archives processed emails to prevent duplicate runs.
-
----
-
-## Video Demonstration
-* [Watch the full automation execution on Google Drive](YOUR_GOOGLE_DRIVE_LINK_HERE)
+Headless enterprise task bot built in Automation Anywhere A360 to automate manual Service Access Request (SAR) approvals in ServiceNow, replacing UI-based interactions with ServiceNow's native inbound email gateway processing.
 
 ---
 
-## Key Automation Steps & Logic
-1. **Email Monitoring & Data Extraction:** Monitors Outlook for SAR approval emails and parses key parameters (User ID, System Access Level, Approver Details).
-2. **Business Rule Validation:** Validates extracted parameters against pre-defined business rules prior to system entry.
-3. **ServiceNow Processing:** Navigates ServiceNow and updates/approves the corresponding access request ticket.
-4. **Audit Trail & Reporting:** Records transaction timestamps, status codes, and request details into a centralized Excel audit log.
-5. **Exception Handling:** Captures malformed requests or network timeouts, logging exceptions for manual review.
+## 📌 Project Overview
+
+Processing manual Service Access Requests (SAR) via a browser UI introduces DOM dependencies, session timeouts, and execution latency. The **Automated SAR Approval Process (ASAP)** bot monitors incoming approval notifications in Microsoft Outlook, parses critical metadata, and responds via ServiceNow's inbound email gateway to complete approvals headlessly.
+
+* **Iteration 1 (UI-Based):** Initial version used browser automation and simulated keystrokes. While functional, UI loading latencies created execution overhead (~30s runtime per request) and brittle web element dependencies.
+* **Iteration 2 (Headless Email Gateway):** Shifted to ServiceNow’s inbound email processor, eliminating browser dependencies entirely and reducing processing runtime by **~95% (1–2s per request)**.
+
+Upon receiving the automated response, ServiceNow advances the approval state and triggers downstream Active Directory (AD) group provisioning.
 
 ---
 
-## Bot Script Breakdown
+## 🏗 System Architecture & Workflow
 
-| Lines 1 - 17 | Lines 17 - 35 | Lines 35 to End |
-| :---: | :---: | :---: |
-| ![Lines 1-17](media/AutomatedSARApproval_Bot_Screenshot1.png) | ![Lines 17-35](media/AutomatedSARApproval_Bot_Screenshot2.png) | ![Lines 35-End](media/AutomatedSARApproval_Bot_Screenshot3.png) |
-
----
-
-## Tech Stack & Tools
-* **RPA Platform:** Automation Anywhere A360
-* **Applications:** ServiceNow, Microsoft Outlook, Microsoft Excel
-
+```text
+[ Outlook Inbox ] ──► ( Unread SAR Email )
+                            │
+                            ▼
+           [ A360 Task Bot: String Extraction ]
+           ├── Extract SAR ID, User Name, Profile, Ref ID
+           └── Isolate `sys_id` from Query Parameter URL
+                            │
+                            ▼
+           [ Background Email Dispatch ]
+           └── Target: `wpcomain@service-now.com`
+                            │
+                            ▼
+           [ ServiceNow Inbound Processor ]
+           ├── Advances SAR Approval State
+           └── Triggers Downstream AD Group Provisioning
+                            │
+                            ▼
+           [ Post-Processing & Logging ]
+           ├── Update Excel Audit Log (`ASAP_AuditLog_$sBotRunDate$.xlsx`)
+           ├── Write Execution Log (`ASAP_ExecutionLog_$sBotRunDate$.txt`)
+           └── Archive Email ──► `Inbox/Bot Processed SARs`
