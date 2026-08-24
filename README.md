@@ -70,8 +70,8 @@ The Automation Anywhere A360 Task Bot is structured sequentially across 61 logic
 
 | Lines 1–20: Setup & Data Extraction | Lines 21–40: Execution & Catch Block | Lines 41–61: Audit, Archiving & Summaries |
 | :--- | :--- | :--- |
-| ![Lines 1-20](media/asap_bot_lines_1-20.png) | ![Lines 21-40](media/asap_bot_lines_21-40.png) | ![Lines 41-61](media/asap_bot_lines_41-61.png) |
-| Extracts metadata, `Ref:MSG` watermarks, and `sys_id` query strings. | Dispatches headless emails to ServiceNow and handles exception alerts. | Applies Excel audit logs, archives processed emails, and sends completion summaries. |
+| ![Lines 1-20](media/AutomatedSARApproval_Bot_Screenshot1.png) | ![Lines 21-40](media/asap_bot_lines_21-40.png) | ![Lines 41-61](media/asap_bot_lines_41-61.png) |
+| Extracts metadata, `Ref:MSG` watermarks, and `sys_id` query strings. | Dispatches headless emails to ServiceNow and handles exception alerts. | Applies Excel audit logs, archives processed emails, and sends completion summaries. |handles exception alerts. | Applies Excel audit logs, archives processed emails, and sends completion summaries. |
 
 ## Repository Structure
 
