@@ -20,7 +20,7 @@ Upon receiving the automated response, ServiceNow advances the approval state an
 
 ---
 
-## 🏗 System Architecture & Workflow
+## System Architecture & Workflow
 
 ```text
 [ Outlook Inbox ] ──► ( Unread SAR Email )
@@ -45,7 +45,6 @@ Upon receiving the automated response, ServiceNow advances the approval state an
            ├── Write Execution Log (`ASAP_ExecutionLog_$sBotRunDate$.txt`)
            └── Archive Email ──► `Inbox/Bot Processed SARs`
 ```
-
 ## Key Technical Achievements
 
 * **Targeted Data Extraction:** Implemented multi-stage string-parsing logic to extract SAR numbers (`$SampleString$`), candidate names (`$sUserName$`), target profiles (`$sSARProfile$`), `Ref:MSG` watermarks (`$sRefNumber$`), and isolated unique `sys_id` parameters directly from assignment URL query strings (`sys_id=...%26`).
@@ -54,9 +53,7 @@ Upon receiving the automated response, ServiceNow advances the approval state an
   * **Structured Audit Logging:** Appends transaction records (SAR ID, User Name, Profile, Action, Ref ID, Timestamp) directly to an Excel audit log (`$AuditLogPath$`) using the Excel Advanced package.
   * **Execution Logging:** Maintains detailed text milestone logs (`$LogFilePath$`), using dynamic run-date naming (`$sBotRunDate$`) and automated template fallback logic (`ASAP_ExecutionLog_Template.txt`) if a log file does not exist.
 * **Structured Error Handling & Real-Time Alerting:** Wrapped main execution in a global `Try/Catch` block (`AllErrors`). On failure, the bot logs exception details, flags the error state (`$bHasError$ = True`), attaches the execution log (`$lLogFile$`), and automatically sends an alert email (`[ALERT] SAR Automation Failure...`) to administrators.
-* **Inbox State Management:** Automatically archives processed emails to `Inbox/Bot Processed SARs` to guarantee single-pass execution and prevent duplicate processing loops.
-
----
+* **Inbox State Management & Summary Reporting:** Automatically archives processed emails to `Inbox/Bot Processed SARs` to guarantee single-pass execution, and dispatches dynamic execution summary notifications upon run completion.
 
 ## Results & Performance Impact
 
@@ -67,14 +64,36 @@ Upon receiving the automated response, ServiceNow advances the approval state an
 | **Error Handling** | Manual Discovery | **Automated Alerts w/ Log Attachments** | Instant Notification |
 | **Provisioning Flow** | Manual Sign-off Required | **Instant AD Group Trigger** | Full End-to-End |
 
----
+## Bot Implementation & Code Structure
+
+The Automation Anywhere A360 Task Bot is structured sequentially across 61 logic steps:
+
+| Lines 1–20: Setup & Data Extraction | Lines 21–40: Execution & Catch Block | Lines 41–61: Audit, Archiving & Summaries |
+| :--- | :--- | :--- |
+| ![Lines 1-20](images/asap_bot_lines_1-20.png) | ![Lines 21-40](images/asap_bot_lines_21-40.png) | ![Lines 41-61](images/asap_bot_lines_41-61.png) |
+| Extracts metadata, `Ref:MSG` watermarks, and `sys_id` query strings. | Dispatches headless emails to ServiceNow and handles exception alerts. | Applies Excel audit logs, archives processed emails, and sends completion summaries. |
 
 ## Repository Structure
 
-```text
+├── images/
+│   ├── asap_bot_lines_1-20.png          # Screenshot of Lines 1-20
+│   ├── asap_bot_lines_21-40.png         # Screenshot of Lines 21-40
+│   └── asap_bot_lines_41-61.png         # Screenshot of Lines 41-61
 ├── templates/
 │   ├── ASAP_AuditLog_Template.xlsx      # Base Excel audit logging template
 │   └── ASAP_ExecutionLog_Template.txt   # Base text execution logging template
 ├── src/
 │   └── ASAP_v1.0_Email_TaskBot.bot      # A360 Task Bot export
 └── README.md                            # Project documentation
+
+## Future Enhancements 
+* [ ] Privileged Access Safeguards: Add validation rules to intercept target profiles containing high-risk keywords (e.g., Admin, CMS Handler) and route them for manual sign-off instead of auto-approval.
+* [ ] Multi-Action Request Expansion: Extend business rules to process additional email request types (e.g., rejection, access removal, request cancellations).
+* [ ] Direct REST API Gateway Integration: Transition email-based triggers to direct ServiceNow OAuth 2.0 REST API calls for instantaneous sub-second status updates.
+
+## Tech Stack
+ * RPA Engine: Automation Anywhere A360
+ * ITS Integration: ServiceNow Inbound Email Gateway Processing
+ * Mail & File Systems: Microsoft Outlook, Microsoft Excel Advanced, Native File System
+ * Data Processing: String Extraction & Parsing, Dynamic File Initialization
+ * Resiliency: Global Exception Handling (Try/Catch), Real-time Admin Alerting
