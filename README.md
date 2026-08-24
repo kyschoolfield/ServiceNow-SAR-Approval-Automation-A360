@@ -44,6 +44,7 @@ Upon receiving the automated response, ServiceNow advances the approval state an
            ├── Update Excel Audit Log (`ASAP_AuditLog_$sBotRunDate$.xlsx`)
            ├── Write Execution Log (`ASAP_ExecutionLog_$sBotRunDate$.txt`)
            └── Archive Email ──► `Inbox/Bot Processed SARs`
+```
 
 ## Key Technical Achievements
 
