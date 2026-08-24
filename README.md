@@ -75,16 +75,18 @@ The Automation Anywhere A360 Task Bot is structured sequentially across 61 logic
 
 ## Repository Structure
 
+```text
 ├── images/
-│   ├── asap_bot_lines_1-20.png          # Screenshot of Lines 1-20
-│   ├── asap_bot_lines_21-40.png         # Screenshot of Lines 21-40
-│   └── asap_bot_lines_41-61.png         # Screenshot of Lines 41-61
+│   ├── asap_bot_lines_1-20.png          # Screenshot of Lines 1-20 (Setup & Data Extraction)
+│   ├── asap_bot_lines_21-40.png         # Screenshot of Lines 21-40 (Execution & Catch Block)
+│   └── asap_bot_lines_41-61.png         # Screenshot of Lines 41-61 (Audit, Archiving & Summaries)
 ├── templates/
 │   ├── ASAP_AuditLog_Template.xlsx      # Base Excel audit logging template
 │   └── ASAP_ExecutionLog_Template.txt   # Base text execution logging template
 ├── src/
 │   └── ASAP_v1.0_Email_TaskBot.bot      # A360 Task Bot export
 └── README.md                            # Project documentation
+```
 
 ## Future Enhancements 
 * [ ] Privileged Access Safeguards: Add validation rules to intercept target profiles containing high-risk keywords (e.g., Admin, CMS Handler) and route them for manual sign-off instead of auto-approval.
