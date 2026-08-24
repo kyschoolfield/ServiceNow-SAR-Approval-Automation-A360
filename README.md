@@ -70,7 +70,7 @@ The Automation Anywhere A360 Task Bot is structured sequentially across 61 logic
 
 | Lines 1–20: Setup & Data Extraction | Lines 21–40: Execution & Catch Block | Lines 41–61: Audit, Archiving & Summaries |
 | :--- | :--- | :--- |
-| ![Lines 1-20](images/asap_bot_lines_1-20.png) | ![Lines 21-40](images/asap_bot_lines_21-40.png) | ![Lines 41-61](images/asap_bot_lines_41-61.png) |
+| ![Lines 1-20](media/asap_bot_lines_1-20.png) | ![Lines 21-40](media/asap_bot_lines_21-40.png) | ![Lines 41-61](media/asap_bot_lines_41-61.png) |
 | Extracts metadata, `Ref:MSG` watermarks, and `sys_id` query strings. | Dispatches headless emails to ServiceNow and handles exception alerts. | Applies Excel audit logs, archives processed emails, and sends completion summaries. |
 
 ## Repository Structure
@@ -88,14 +88,14 @@ The Automation Anywhere A360 Task Bot is structured sequentially across 61 logic
 └── README.md                            # Project documentation
 ```
 
-## Future Enhancements 
-* [ ] Privileged Access Safeguards: Add validation rules to intercept target profiles containing high-risk keywords (e.g., Admin, CMS Handler) and route them for manual sign-off instead of auto-approval.
-* [ ] Multi-Action Request Expansion: Extend business rules to process additional email request types (e.g., rejection, access removal, request cancellations).
-* [ ] Direct REST API Gateway Integration: Transition email-based triggers to direct ServiceNow OAuth 2.0 REST API calls for instantaneous sub-second status updates.
+## Future Enhancements
+* Privileged Access Safeguards: Add validation rules to intercept target profiles containing high-risk keywords (e.g., Admin, CMS Handler) and route them for manual sign-off instead of auto-approval.
+* Multi-Action Request Expansion: Extend business rules to process additional email request types (e.g., rejection, access removal, request cancellations).
+* Direct REST API Gateway Integration: Transition email-based triggers to direct ServiceNow OAuth 2.0 REST API calls for instantaneous sub-second status updates.
 
 ## Tech Stack
- * RPA Engine: Automation Anywhere A360
- * ITS Integration: ServiceNow Inbound Email Gateway Processing
- * Mail & File Systems: Microsoft Outlook, Microsoft Excel Advanced, Native File System
- * Data Processing: String Extraction & Parsing, Dynamic File Initialization
- * Resiliency: Global Exception Handling (Try/Catch), Real-time Admin Alerting
+ * **RPA Engine:** Automation Anywhere A360
+ * **ITS Integration:** ServiceNow Inbound Email Gateway Processing
+ * **Mail & File Systems:** Microsoft Outlook, Microsoft Excel Advanced, Native File System
+ * **Data Processing:** String Extraction & Parsing, Dynamic File Initialization
+ * **Resiliency:** Global Exception Handling (`Try/Catch`), Real-time Admin Alerting
